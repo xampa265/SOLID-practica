@@ -1,78 +1,63 @@
 package com.kreitek.files;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public abstract class FileSystemItemBase implements FileSystemItem {
+public abstract class FileSystemItemBase{
     protected static final String PATH_SEPARATOR = "/";
-    protected String name;
-    protected FileSystemItem parent;
+    private String name;
+    private Directory parent;
+    private String fullPath = PATH_SEPARATOR;
+    private int size;
+    private final List<FileSystemItemBase> files;
 
-    protected FileSystemItemBase(FileSystemItem parent, String name) {
-        setName(name);
-        setParent(parent);
+    protected FileSystemItemBase(Directory parent, String name) {
+        this.parent = parent;
+        this.name = name;
+        files = new ArrayList<>();
     }
 
-    @Override
     public String getName() {
         return name;
     }
 
-    @Override
     public void setName(String name) {
-        if (name == null) {
-            throw new IllegalArgumentException("El nombre no puede ser nulo");
-        }
-       this.name = name;
+        this.name = name;
     }
 
-    @Override
-    public FileSystemItem getParent() {
+    public FileSystemItemBase getParent(){
         return parent;
     }
 
-    @Override
-    public void setParent(FileSystemItem directory) {
-        if (directory != null && !(directory instanceof Directory)) {
-            throw new IllegalArgumentException("El padre solo puede ser un directorio");
-        }
-        if (this.parent != directory) {
-            if (this.parent != null) this.parent.removeFile(this);
-            this.parent = directory;
-            if (directory != null) directory.addFile(this);
-        }
+    public void setParent(Directory parent) {
+        this.parent = parent;
     }
 
-    @Override
+    //TODO corregir este método
     public String getFullPath() {
-        String path = PATH_SEPARATOR;
         if (parent != null) {
             String parentFullPath = parent.getFullPath();
-            path = parent.getFullPath() + (parentFullPath.length() > 1 ? PATH_SEPARATOR : "");
+            fullPath = parent.getFullPath() + (parentFullPath.length() > 1 ? PATH_SEPARATOR : "");
         }
-        path = path + getName();
-        return path;
+        fullPath = fullPath + getName();
+        return fullPath;
     }
 
-    @Override
-    public abstract String getExtension();
+    public void setFullPath(String fullPath) {
+        this.fullPath = fullPath;
+    }
 
-    @Override
-    public abstract List<FileSystemItem> listFiles();
-
-    @Override
     public abstract int getSize();
 
-    @Override
-    public abstract void open();
+    public void setSize(int size) {
+        this.size = size;
+    }
 
-    @Override
-    public abstract void setPosition(int numberOfBytesFromBeginning);
+    /*public List<FileSystemItemBase> listFiles() {
+        return files;
+    }*/
 
-    @Override
-    public abstract byte[] read(int numberOfBytesToRead);
+    public abstract List<FileSystemItemBase> listFiles();
 
-    @Override
-    public abstract void write(byte[] buffer);
 
-    public abstract void close();
 }

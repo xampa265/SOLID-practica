@@ -1,0 +1,10 @@
+el primer principio que he intentado solucionar es el de:
+
+PRINCIPIO DE SEGREGACIÓN DE INTERFACES
+
+La Interfaz FileSystemItems.java tiene muchos métodos y no todos son necesarios,
+las clases que implementan esta interfaz tienen métodos que solo producen excepciones.
+Solucion:
+separar esta interfaz en interfaces más pequeñas.
+
+ademas he implementado el metodo  getSize() como me pedia el enunciado.
