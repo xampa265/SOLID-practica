@@ -8,3 +8,18 @@ Solucion:
 separar esta interfaz en interfaces más pequeñas.
 
 ademas he implementado el metodo  getSize() como me pedia el enunciado.
+
+
+
+
+PRINCIPIO DE RESPONSABILIDAD ÚNICA
+ Una clase debe tener una única razón para cambiar =una clase hace una sola ‘’cosa’’
+eso no se da en este ejemplo porque
+La clase Directory tiene métodos para añadir y eliminar ficheros y un método para listar ficheros ademas tiene  métodos que no utiliza que hereda de una interfaz.
+La clase File hace mas de una cosa por ejemplo tiene métodos de lectura y escritura, también tiene métodos para abrir y cerrar un fichero, también tiene métodos para ver el tamaño de los ficheros y métodos para convertir los ficheros a otras extensiones. 
+
+
+
+
+PRINCIPIO  open/close
+ Una una entidad de software debería estar abierta a extensión pero cerrada a modificación y no se cumple ya que para hacer un cambio tienes que modificar algo en  todas las clases. 
